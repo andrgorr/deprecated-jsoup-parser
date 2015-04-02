@@ -7,3 +7,6 @@ commands:
     setteam:
         usage: /setteam <team>
         description: Authenticate the player on the team given.
+    getteam:
+        usage: /getteam
+        decription: Get the team that is being authenticated.
