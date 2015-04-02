@@ -70,6 +70,11 @@ public class Main extends JavaPlugin implements Listener{
                     if (args.length == 1) {
                         String teamname = args[0];
 
+                        if(args[0].equals(getConfig().getString("team"))){
+                            sender.sendMessage(ChatColor.RED + "Your team (" + ChatColor.DARK_RED + "Slivers" + ChatColor.RED + ") is already the one to authenticate");
+                            return true;
+                        }
+
                         getConfig().set("team", teamname);
                         saveConfig();
                         sender.sendMessage(ChatColor.AQUA + "Your team (" + ChatColor.GRAY + args[0] + ChatColor.AQUA + ") is now the team to authenticate. Make sure this URL works, as otherwise this will not work:" );
@@ -78,6 +83,17 @@ public class Main extends JavaPlugin implements Listener{
                     }
                 }
             }
+            if(cmd.getName().equalsIgnoreCase("getteam")) {
+                if(args.length == 0){
+                    sender.sendMessage(ChatColor.AQUA + "The team to authenticate is " + ChatColor.DARK_AQUA + "" + ChatColor.BOLD + getConfig().getString("team"));
+                    return true;
+                }else{
+                    sender.sendMessage(ChatColor.RED + "Wrong syntax:");
+                    sender.sendMessage(ChatColor.RED + "/getteam");
+                    return true;
+                }
+            }
         return true;
     }
 }
+
