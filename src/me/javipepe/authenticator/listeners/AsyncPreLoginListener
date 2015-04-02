@@ -1,0 +1,27 @@
+package me.javipepe.authenticator.listeners;
+
+import me.javipepe.authenticator.Main;
+import org.bukkit.Bukkit;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
+import org.bukkit.event.player.PlayerPreLoginEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
+
+public class AsyncPreLoginListener implements Listener {
+
+    @EventHandler
+    public void onPreLogin(AsyncPlayerPreLoginEvent e) {
+        String playername = e.getName();
+
+        for (String team : Main.wlteams) {
+            if (Main.authenticateteam(playername, team)) {
+                Bukkit.getPlayer(playername).setWhitelisted(true);
+                //Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "minecraft:whitelist add " + playername);
+                e.allow();
+
+            }
+        }
+    }
+
+}
