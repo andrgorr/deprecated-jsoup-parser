@@ -1,0 +1,9 @@
+name: Authenticator
+version: 0.2
+main: me.javipepe.authenticator.Main
+description: Team Authenticator designed for The Overcast Network (oc.tc)
+
+commands:
+    setteam:
+        usage: /setteam <team>
+        description: Authenticate the player on the team given.
