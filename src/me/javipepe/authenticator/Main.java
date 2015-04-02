@@ -90,7 +90,7 @@ public class Main extends JavaPlugin implements Listener{
                         String teamname = args[0];
 
                         if(args[0].equals(getConfig().getString("team"))){
-                            sender.sendMessage(ChatColor.RED + "Your team (" + ChatColor.DARK_RED + "Slivers" + ChatColor.RED + ") is already the one to authenticate");
+                            sender.sendMessage(ChatColor.RED + "Your team (" + ChatColor.DARK_RED + args[0] + ChatColor.RED + ") is already the one to authenticate");
                             return true;
                         }
 
