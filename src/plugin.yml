@@ -10,3 +10,9 @@ commands:
     getteam:
         usage: /getteam
         decription: Get the team that is being authenticated.
+    wlteam:
+        usage: /wlteam add/remove <team>
+        description: Add or remove a team to the whitelist.
+    blacklist:
+        usage: /blacklist add/remove <team>
+        description: Add or remove a team from the blacklist.
