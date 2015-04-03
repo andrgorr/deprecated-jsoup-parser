@@ -21,8 +21,8 @@ import java.util.ArrayList;
  */
 public class Main extends JavaPlugin implements Listener{
 
-    public static ArrayList<String> wlteams = new ArrayList<>();
-    public static ArrayList<String> blteams = new ArrayList<>();
+    public static ArrayList<String> wlteams = new ArrayList<String>();
+    public static ArrayList<String> blteams = new ArrayList<String>();
 
     public void onEnable(){
         getConfig().options().copyDefaults(true);
@@ -85,40 +85,40 @@ public class Main extends JavaPlugin implements Listener{
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args){
 
-            if (cmd.getName().equalsIgnoreCase("setteam")) {
-                if(sender.isOp()){
+        if (cmd.getName().equalsIgnoreCase("setteam")) {
+            if(sender.isOp()){
 
 
-                    if (args.length == 0 || args.length > 1) {
-                        sender.sendMessage(ChatColor.RED + "Please specify the team represented as yourteamname here: http://oc.tc/teams/" + ChatColor.DARK_RED + "yourteamname");
-                        return true;
-                    }
-                    if (args.length == 1) {
-                        String teamname = args[0];
-
-                        if(args[0].equals(getConfig().getString("team"))){
-                            sender.sendMessage(ChatColor.RED + "Your team (" + ChatColor.DARK_RED + args[0] + ChatColor.RED + ") is already the one to authenticate");
-                            return true;
-                        }
-
-                        getConfig().set("team", teamname.toLowerCase());
-                        saveConfig();
-                        sender.sendMessage(ChatColor.AQUA + "Your team (" + ChatColor.GRAY + args[0] + ChatColor.AQUA + ") is now the team to authenticate. Make sure this URL works, as otherwise this will not work:" );
-                        sender.sendMessage(ChatColor.DARK_GRAY + "" + ChatColor.BOLD + "https://oc.tc/teams/" + args[0]);
-                        return true;
-                    }
-                }
-            }
-            if(cmd.getName().equalsIgnoreCase("getteam")) {
-                if(args.length == 0){
-                    sender.sendMessage(ChatColor.AQUA + "The team to authenticate is " + ChatColor.DARK_AQUA + "" + ChatColor.BOLD + getConfig().getString("team"));
+                if (args.length == 0 || args.length > 1) {
+                    sender.sendMessage(ChatColor.RED + "Please specify the team represented as yourteamname here: http://oc.tc/teams/" + ChatColor.DARK_RED + "yourteamname");
                     return true;
-                }else{
-                    sender.sendMessage(ChatColor.RED + "Wrong syntax:");
-                    sender.sendMessage(ChatColor.RED + "/getteam");
+                }
+                if (args.length == 1) {
+                    String teamname = args[0];
+
+                    if(args[0].equals(getConfig().getString("team"))){
+                        sender.sendMessage(ChatColor.RED + "Your team (" + ChatColor.DARK_RED + args[0] + ChatColor.RED + ") is already the one to authenticate");
+                        return true;
+                    }
+
+                    getConfig().set("team", teamname.toLowerCase());
+                    saveConfig();
+                    sender.sendMessage(ChatColor.AQUA + "Your team (" + ChatColor.GRAY + args[0] + ChatColor.AQUA + ") is now the team to authenticate. Make sure this URL works, as otherwise this will not work:" );
+                    sender.sendMessage(ChatColor.DARK_GRAY + "" + ChatColor.BOLD + "https://oc.tc/teams/" + args[0]);
                     return true;
                 }
             }
+        }
+        if(cmd.getName().equalsIgnoreCase("getteam")) {
+            if(args.length == 0){
+                sender.sendMessage(ChatColor.AQUA + "The team to authenticate is " + ChatColor.DARK_AQUA + "" + ChatColor.BOLD + getConfig().getString("team"));
+                return true;
+            }else{
+                sender.sendMessage(ChatColor.RED + "Wrong syntax:");
+                sender.sendMessage(ChatColor.RED + "/getteam");
+                return true;
+            }
+        }
         if(cmd.getName().equalsIgnoreCase("wlteam")){
             if(sender.isOp()){
                 if(args.length == 0){
