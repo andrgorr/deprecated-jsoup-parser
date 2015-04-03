@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/javipepe/Authenticator.svg?branch=master)](https://travis-ci.org/javipepe/Authenticator)
 # Authenticator
 This plugin will authenticate the players joining and check if they are on an Overcast Network team provided.
 
