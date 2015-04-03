@@ -1,7 +1,8 @@
 package me.javipepe.authenticator;
 
-import net.md_5.bungee.api.ChatColor;
+
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -21,11 +22,17 @@ import java.util.ArrayList;
 public class Main extends JavaPlugin implements Listener{
 
     public static ArrayList<String> wlteams = new ArrayList<>();
+    public static ArrayList<String> blteams = new ArrayList<>();
 
     public void onEnable(){
         getConfig().options().copyDefaults(true);
         saveConfig();
         Bukkit.getPluginManager().registerEvents(this, this);
+    }
+
+    public void onDisable(){
+        getConfig().set("blacklistedteams", blteams);
+        saveConfig();
     }
 
     @EventHandler
@@ -94,7 +101,7 @@ public class Main extends JavaPlugin implements Listener{
                             return true;
                         }
 
-                        getConfig().set("team", teamname);
+                        getConfig().set("team", teamname.toLowerCase());
                         saveConfig();
                         sender.sendMessage(ChatColor.AQUA + "Your team (" + ChatColor.GRAY + args[0] + ChatColor.AQUA + ") is now the team to authenticate. Make sure this URL works, as otherwise this will not work:" );
                         sender.sendMessage(ChatColor.DARK_GRAY + "" + ChatColor.BOLD + "https://oc.tc/teams/" + args[0]);
@@ -167,10 +174,71 @@ public class Main extends JavaPlugin implements Listener{
                 return true;
             }
         }
+        if(cmd.getName().equalsIgnoreCase("blacklist")){
+            if(sender.isOp()){
+                if(args.length == 0){
+                    sender.sendMessage(org.bukkit.ChatColor.RED + "Wrong syntax.");
+                    sender.sendMessage(org.bukkit.ChatColor.RED + "/blacklist add/remove <team>");
+                    return true;
+
+                }else{
+                    if(args[0].equalsIgnoreCase("add")) {
+
+                        String team = args[1];
+                        if(!blteams.contains(team)){
+                            if(team.equalsIgnoreCase(getConfig().getString("team"))){
+                                sender.sendMessage(ChatColor.RED + "You can't blacklist this server's team (" + team + ").");
+                                return true;
+                            }
+                            for(Player p : Bukkit.getOnlinePlayers()){
+                                if(authenticateteam(p.getName(), team)){
+
+                                    p.kickPlayer(ChatColor.GRAY + "" + "You have been blacklisted from this server.");
+                                }
+                            }
+                            blteams.add(team);
+                            sender.sendMessage(org.bukkit.ChatColor.DARK_GRAY + "" + org.bukkit.ChatColor.BOLD + team + org.bukkit.ChatColor.RESET + org.bukkit.ChatColor.GRAY + " is now blacklisted.");
+                            return true;
+                        }else{
+                            sender.sendMessage(org.bukkit.ChatColor.RED + team + " is already blacklisted.");
+                            return true;
+                        }
+
+
+                    }else if(args[0].equalsIgnoreCase("remove")){
+                        String team = args[1];
+                        if(blteams.contains(team)){
+
+                            blteams.remove(team);
+
+                            sender.sendMessage(org.bukkit.ChatColor.RED + "" + org.bukkit.ChatColor.BOLD + team + org.bukkit.ChatColor.RESET + org.bukkit.ChatColor.DARK_RED + " is no longer blacklisted");
+                            return true;
+                        }else{
+                            sender.sendMessage(org.bukkit.ChatColor.RED + team + " is not blacklisted!");
+                            return true;
+                        }
+                    }else if(args[0].equalsIgnoreCase("list")){
+                        if(blteams.isEmpty()){
+                            sender.sendMessage(org.bukkit.ChatColor.RED + "There are no teams blacklisted.");
+                            return true;
+                        }
+                        sender.sendMessage(ChatColor.GRAY + "" + org.bukkit.ChatColor.STRIKETHROUGH + "------- " + org.bukkit.ChatColor.RESET + org.bukkit.ChatColor.RED + "Blacklisted Teams (" + blteams.size() + ")" + ChatColor.GRAY + "" + org.bukkit.ChatColor.STRIKETHROUGH + " -------");
+                        for(String team: blteams){
+                            sender.sendMessage(org.bukkit.ChatColor.WHITE + " ○ " + org.bukkit.ChatColor.DARK_AQUA + team);
+
+                        }
+
+                        return true;
+                    }
+                }
+            }else{
+                sender.sendMessage(org.bukkit.ChatColor.RED + "You don't have permission to execute this command.");
+                return true;
+            }
+        }
 
         return true;
     }
 
 
 }
-
