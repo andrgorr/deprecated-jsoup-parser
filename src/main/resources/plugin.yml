@@ -1,6 +1,6 @@
-name: Authenticator
-version: 0.2
-main: me.javipepe.authenticator.Main
+name: ${artifactId}
+version: ${version}
+main: ${plugin.mainClass}
 description: Team Authenticator designed for The Overcast Network (oc.tc)
 
 commands:
