@@ -1,4 +1,4 @@
-<strike>Authenticator</strike> deprecated-jsoup-parser [![Build Status](https://travis-ci.org/javipepe/Authenticator.svg?branch=master)](https://travis-ci.org/javipepe/Authenticator)
+<strike>Authenticator</strike> deprecated-jsoup-parser [![Build Status](https://travis-ci.org/javipepe/deprecated-jsoup-parser.svg?branch=master)](https://travis-ci.org/javipepe/deprecated-jsoup-parser)
 ===========
 Deprecated in favour of new and less hacky ways of doing this. Formerly, a jsoup website (quite hacky) minecraft parser which authenticates people joining a server being granted special permissions if they were on a certain team
 
